@@ -1,256 +1,98 @@
- "use client";
+"use client";
 
 import { useEffect, useState } from "react";
 import {
-  ArrowDown,
-  ArrowUpRight,
-  BriefcaseBusiness,
-  Code2,
-  Github,
-  Instagram,
-  Linkedin,
-  Mail,
-  Menu,
-  Rocket,
-  Sparkles,
-  X,
+  ArrowUpRight, BookOpen, Building2, Gamepad2, Github, GraduationCap,
+  Headphones, Mail, MapPin, Menu, MessageCircle, Moon, Music2, Sparkles,
+  Users, X
 } from "lucide-react";
 
-const skills = [
-  { name: "Tìm hiểu & nắm bắt thông tin", level: "82%", icon: "⌕" },
-  { name: "Làm việc nhóm", level: "80%", icon: "◎" },
-  { name: "Giao tiếp cơ bản", level: "72%", icon: "↗" },
-  { name: "Khả năng thích nghi", level: "84%", icon: "↻" },
-  { name: "Chịu áp lực", level: "78%", icon: "◈" },
-  { name: "Tinh thần học hỏi", level: "88%", icon: "✦" },
-];
+const nav = [["Home","home"],["Giới thiệu","about"],["Sở thích","hobbies"],["Kỹ năng","skills"],["Dự án","projects"],["Liên hệ","contact"]];
+const hobbies = [[BookOpen,"Đọc truyện"],[Headphones,"Nghe nhạc"],[MessageCircle,"Hóng truyện"],[Gamepad2,"Chơi game"]];
+const skills = ["Tìm hiểu & nắm bắt thông tin","Làm việc nhóm","Giao tiếp cơ bản","Khả năng thích nghi","Chịu áp lực"];
 
-const projects = [
-  {
-    number: "01",
-    title: "Portfolio cá nhân",
-    description: "Website portfolio đầu tiên của mình — sản phẩm của thử thách BCN, được xây dựng với sự hỗ trợ của AI và triển khai trên Vercel.",
-    tags: ["Next.js", "TypeScript", "Vercel"],
-    href: "#contact",
-  },
-  {
-    number: "02",
-    title: "Coming soon",
-    description: "Mình chưa có project cá nhân hoàn chỉnh. Đây sẽ là không gian để cập nhật sản phẩm đầu tiên trong hành trình học tập sắp tới.",
-    tags: ["Learning", "Building", "Future"],
-    href: "#contact",
-  },
-  {
-    number: "03",
-    title: "Build in public",
-    description: "Mục tiêu tiếp theo: học thêm, làm những project nhỏ và ghi lại quá trình phát triển của bản thân.",
-    tags: ["Growth", "Practice", "Ideas"],
-    href: "#contact",
-  },
-];
-
-function Avatar() {
-  return (
-    <div className="avatar-wrap" aria-label="Avatar placeholder">
-      <div className="avatar-glow" />
-      <div className="avatar">
-        <div className="hair" />
-        <div className="face">
-          <div className="ear left" />
-          <div className="ear right" />
-          <div className="glasses">
-            <span />
-            <i />
-            <span />
-          </div>
-          <div className="eyes"><b /><b /></div>
-          <div className="nose" />
-          <div className="smile" />
-        </div>
-        <div className="hoodie">
-          <div className="hoodie-string left" />
-          <div className="hoodie-string right" />
-        </div>
-      </div>
+function CosmicAvatar() {
+  return <div className="cosmic-avatar" aria-label="Ảnh đại diện cosmic">
+    <div className="orbit orbit-a"/><div className="orbit orbit-b"/>
+    <span className="star star-a">✦</span><span className="star star-b">✦</span>
+    <div className="avatar-scene">
+      <div className="moon-hat"/>
+      <div className="character"><div className="hair"/><div className="face"><i/><i/></div><div className="hood"/></div>
+      <div className="ground"/>
     </div>
-  );
+    <div className="avatar-moon">◐</div>
+  </div>
 }
 
 export default function Portfolio() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open,setOpen]=useState(false);
+  const [music,setMusic]=useState(false);
+  const [scrolled,setScrolled]=useState(false);
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    onScroll();
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+  useEffect(()=>{
+    const f=()=>setScrolled(window.scrollY>30);
+    window.addEventListener("scroll",f); f();
+    return()=>window.removeEventListener("scroll",f);
+  },[]);
 
-  const close = () => setOpen(false);
+  return <main>
+    <nav className={`nav ${scrolled?"nav-scrolled":""}`}>
+      <a href="#home" className="brand"><span>✦</span> KT <b>PORTFOLIO</b></a>
+      <button className="music" onClick={()=>setMusic(!music)}><Music2 size={18}/>{music?"Đang phát":"Nhạc nền"}<i className={music?"playing":""}/></button>
+      <div className={`nav-links ${open?"mobile-open":""}`}>{nav.map(([label,id])=><a key={id} href={`#${id}`} onClick={()=>setOpen(false)}>{label}</a>)}</div>
+      <button className="theme" aria-label="Chế độ tối"><Moon size={20}/></button>
+      <button className="menu" onClick={()=>setOpen(!open)} aria-label="Mở menu">{open?<X/>:<Menu/>}</button>
+    </nav>
 
-  return (
-    <main>
-      <nav className={`nav ${scrolled ? "nav-scrolled" : ""}`}>
-        <a className="brand" href="#home" onClick={close}>
-          <span className="brand-mark">✦</span>
-          <span>KIỆT<span>LE</span></span>
-        </a>
+    <section id="home" className="hero section">
+      <div className="stars"/><div className="nebula n1"/><div className="nebula n2"/><div className="planet planet-a"/><div className="planet planet-b"/>
+      <div className="hero-avatar reveal"><CosmicAvatar/></div>
+      <div className="hero-copy reveal delay-1">
+        <div className="currently"><Sparkles size={15}/> CURRENTLY <Sparkles size={15}/></div>
+        <h1>Lê Thanh Tuấn Kiệt</h1>
+        <h2>Tân sinh viên <span>•</span> IUH</h2>
+        <div className="meta"><span><GraduationCap/> Lớp DHTH22A</span><span><Building2/> Đại học Công Nghiệp TP.HCM</span></div>
+        <div className="divider"/>
+        <blockquote>“Mình muốn dùng quãng đường đại học để hiểu bản thân hơn, học những điều mới và tìm ra nơi mình thật sự thuộc về.”</blockquote>
+      </div>
+      <a href="#about" className="scroll"><span/> CUỘN ĐỂ KHÁM PHÁ</a>
+    </section>
 
-        <div className={`nav-links ${open ? "mobile-open" : ""}`}>
-          {["HOME", "ABOUT", "PROJECTS", "SKILLS", "CONTACT"].map((item) => (
-            <a key={item} href={`#${item.toLowerCase()}`} onClick={close}>{item}</a>
-          ))}
-        </div>
+    <section className="quick section reveal">
+      <div><GraduationCap/><b>Tân sinh viên</b><span>2022 - nay</span></div>
+      <div><Building2/><b>Đại học</b><span>Công Nghiệp TP.HCM</span></div>
+      <div><Users/><b>Lớp</b><span>DHTH22A</span></div>
+      <div><MapPin/><b>Địa điểm</b><span>TP. Hồ Chí Minh</span></div>
+    </section>
 
-        <a className="nav-cta" href="#contact" onClick={close}>LET&apos;S TALK <ArrowUpRight size={16}/></a>
-        <button className="menu-btn" onClick={() => setOpen(!open)} aria-label="Toggle menu">
-          {open ? <X /> : <Menu />}
-        </button>
-      </nav>
+    <section id="about" className="content section">
+      <div className="section-title"><span>01 / GIỚI THIỆU</span><h2>Xin chào, mình là <em>Kiệt.</em></h2></div>
+      <div className="about-grid">
+        <div><p className="lead">Xin chào mọi người, mình tên: Lê Thanh Tuấn Kiệt, là tân sinh viên của trường Đại học Công Nghiệp TP HCM, mình học lớp DHTH22A.</p>
+        <p>Mình là một người khá thân thiện và thẳng thắn nhưng đôi khi hay hướng nội. Đây là portfolio của mình, mục đích để mọi người có thể hiểu hơn về con người mình và hỗ trợ mình nhiều hơn trong quãng đường sắp tới.</p></div>
+        <div className="quote"><Sparkles/><p>Học những điều mới.<br/><em>Hiểu bản thân hơn.</em><br/>Tìm nơi mình thuộc về.</p></div>
+      </div>
+    </section>
 
-      <section id="home" className="hero section">
-        <div className="hero-noise" />
-        <div className="hero-orb orb-one" />
-        <div className="hero-orb orb-two" />
-        <div className="hero-copy reveal">
-          <div className="eyebrow"><span /> STUDENT DEVELOPER <span /></div>
-          <p className="mini-title">HI, I&apos;M</p>
-          <h1>TUẤN<br/><em>KIỆT.</em></h1>
-          <p className="hero-desc">
-            I build <strong>digital experiences</strong> that are useful,
-            expressive and made to stand out.
-          </p>
-          <div className="hero-actions">
-            <a className="button primary" href="#projects">VIEW MY WORK <ArrowUpRight size={18}/></a>
-            <a className="button ghost" href="#about">ABOUT ME <ArrowDown size={18}/></a>
-          </div>
-        </div>
+    <section id="hobbies" className="content section">
+      <div className="section-title"><span>02 / SỞ THÍCH</span><h2>Những điều mình <em>thích.</em></h2></div>
+      <div className="hobby-grid">{hobbies.map(([Icon,text])=><div className="glass-card" key={text}><Icon/><h3>{text}</h3><span>MY INTEREST</span></div>)}</div>
+    </section>
 
-        <div className="hero-art reveal delay-1">
-          <div className="floating-label label-top"><Sparkles size={15}/> STUDENT × TECH</div>
-          <div className="avatar-card">
-            <Avatar />
-            <div className="avatar-caption">
-              <span>CURRENTLY LEARNING</span>
-              <strong>web &amp; digital things.</strong>
-            </div>
-          </div>
-          <div className="code-card">
-            <span>01</span><span>const</span> <b>idea</b> = <i>&quot;build it&quot;</i>;
-          </div>
-          <div className="purple-ring" />
-        </div>
+    <section id="skills" className="content section">
+      <div className="section-title"><span>03 / KỸ NĂNG</span><h2>Đang học, đang <em>tiến bộ.</em></h2></div>
+      <div className="skill-list">{skills.map((s,i)=><div className="skill" key={s}><b>0{i+1}</b><span>{s}</span><div><i style={{width:`${72+i*4}%`}}/></div></div>)}</div>
+    </section>
 
-        <div className="scroll-cue"><span /> SCROLL TO EXPLORE</div>
-      </section>
+    <section id="projects" className="content section">
+      <div className="section-title"><span>04 / DỰ ÁN</span><h2>Hành trình <em>phía trước.</em></h2></div>
+      <div className="empty-project"><Sparkles/><h3>Chưa có project GitHub</h3><p>Hiện tại mình đang tập trung học hỏi và xây dựng những project đầu tiên. Những sản phẩm đầu tiên sẽ sớm xuất hiện tại đây.</p><a href="https://github.com/mio-kt" target="_blank" rel="noreferrer">XEM GITHUB <ArrowUpRight/></a></div>
+    </section>
 
-      <section id="about" className="section about">
-        <div className="section-head reveal">
-          <p className="kicker">01 / ABOUT</p>
-          <h2>Một chút về<br/><em>mình.</em></h2>
-        </div>
-        <div className="about-grid">
-          <div className="about-copy reveal">
-            <p className="lead">
-              Mình là một bạn trẻ yêu thích công nghệ, thiết kế và việc biến
-              những ý tưởng nhỏ thành sản phẩm thật.
-            </p>
-            <p>
-              Mình thích học bằng cách làm: bắt đầu từ một ý tưởng, phác thảo
-              giao diện, viết code, sửa lỗi và cuối cùng deploy sản phẩm lên
-              internet.
-            </p>
-            <div className="about-facts">
-              <div><span>TRƯỜNG</span><strong>ĐH Công Nghiệp TP HCM</strong></div>
-              <div><span>LỚP</span><strong>DHTH22A</strong></div>
-              <div><span>ĐỊNH HƯỚNG</span><strong>Học & phát triển</strong></div>
-            </div>
-          </div>
-          <div className="quote-card reveal delay-1">
-            <Rocket size={30}/>
-            <p>&quot;AI là trợ thủ.<br/><em>Sản phẩm cuối cùng<br/>là của bạn.</em>&quot;</p>
-            <span>— LÊ THANH TUẤN KIỆT</span>
-          </div>
-        </div>
-      </section>
-
-      <section id="projects" className="section projects">
-        <div className="section-head split reveal">
-          <div>
-            <p className="kicker">02 / PROJECTS</p>
-            <h2>Selected <em>work.</em></h2>
-          </div>
-          <p className="section-note">Mình chưa có nhiều project cá nhân.<br/>Đây là nơi mình sẽ cập nhật chúng trong tương lai.</p>
-        </div>
-
-        <div className="project-list">
-          {projects.map((project) => (
-            <article className="project-card reveal" key={project.number}>
-              <div className="project-visual">
-                <div className="mock-window">
-                  <div className="window-bar"><i/><i/><i/></div>
-                  <div className="mock-lines">
-                    <span className="long" /><span /><span className="short" />
-                  </div>
-                  <div className="mock-box" />
-                </div>
-                <span className="project-number">{project.number}</span>
-              </div>
-              <div className="project-info">
-                <div>
-                  <h3>{project.title}</h3>
-                  <p>{project.description}</p>
-                  <div className="tags">{project.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-                </div>
-                <a href={project.href} className="round-arrow" aria-label={`Open ${project.title}`}><ArrowUpRight /></a>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section id="skills" className="section skills">
-        <div className="section-head reveal">
-          <p className="kicker">03 / SKILLS</p>
-          <h2>Điểm mạnh <em>của mình.</em></h2>
-        </div>
-        <div className="skills-grid">
-          {skills.map((skill, i) => (
-            <div className="skill-card reveal" style={{ animationDelay: `${i * 70}ms` }} key={skill.name}>
-              <div className="skill-icon">{skill.icon}</div>
-              <div className="skill-meta"><span>{skill.name}</span><small>{skill.level}</small></div>
-              <div className="progress"><span style={{ width: skill.level }} /></div>
-            </div>
-          ))}
-        </div>
-        <div className="tool-strip reveal">
-          <span><Code2 size={18}/> CODE</span>
-          <span><Sparkles size={18}/> AI ASSISTED</span>
-          <span><BriefcaseBusiness size={18}/> BUILD</span>
-          <span><Rocket size={18}/> DEPLOY</span>
-        </div>
-      </section>
-
-      <section id="contact" className="section contact">
-        <div className="contact-box reveal">
-          <div>
-            <p className="kicker">04 / CONTACT</p>
-            <h2>Have an idea?<br/><em>Let&apos;s build it.</em></h2>
-            <p className="contact-text">Nếu bạn muốn xem code, trao đổi ý tưởng hoặc góp ý cho portfolio này, hãy kết nối với mình.</p>
-          </div>
-          <a className="button primary big" href="mailto:kietlethanhtuan@gmail.com">SAY HELLO <Mail size={19}/></a>
-        </div>
-        <footer>
-          <span>© 2026 LÊ THANH TUẤN KIỆT</span>
-          <div className="socials">
-            <a href="#" aria-label="GitHub"><Github size={18}/></a>
-            <a href="#" aria-label="LinkedIn"><Linkedin size={18}/></a>
-            <a href="#" aria-label="Instagram"><Instagram size={18}/></a>
-          </div>
-          <span>BUILT WITH CURIOSITY + AI</span>
-        </footer>
-      </section>
-    </main>
-  );
+    <section id="contact" className="contact section">
+      <div className="contact-box"><div><span>05 / LIÊN HỆ</span><h2>Cùng mình viết tiếp<br/><em>chặng đường này.</em></h2></div>
+      <a className="email" href="mailto:kietlethanhtuan@gmail.com"><Mail/> kietlethanhtuan@gmail.com <ArrowUpRight/></a></div>
+      <footer><span>© 2026 Lê Thanh Tuấn Kiệt</span><a href="https://github.com/mio-kt" target="_blank" rel="noreferrer"><Github/> mio-kt</a><span>Made with ✦ curiosity</span></footer>
+    </section>
+  </main>
 }
