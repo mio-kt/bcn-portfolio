@@ -1,6 +1,6 @@
 # BCN Portfolio Challenge
 
-Portfolio cá nhân theo concept poster BCN Portfolio Challenge:
+Portfolio cá nhân của Lê Thanh Tuấn Kiệt theo concept BCN Portfolio Challenge:
 - Dark / black UI
 - Neon purple accent
 - Creative developer aesthetic
